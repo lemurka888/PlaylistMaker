@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="blue">#3772E7</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">Playlist Maker</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="media">Медиатека</string>
+    <string name="search">Поиск</string>
+    <string name="setting">Настройки</string>
+    <string name="share">Поделиться приложением</string>
+    <string name="support">Написать в поддержку</string>
+    <string name="user_agree">Пользовательское соглашение</string>
+    <style name="Base.Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker"/>
+</resources>
