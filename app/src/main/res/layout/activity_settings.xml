@@ -32,6 +32,7 @@
 
     </LinearLayout>
 
+    <!-- Темная тема -->
     <LinearLayout
         style="@style/SettingButton"
         android:layout_marginBottom="16dp">
@@ -49,6 +50,7 @@
 
     </LinearLayout>
 
+    <!-- Поделиться -->
     <LinearLayout
         style="@style/SettingButton">
 
@@ -62,6 +64,7 @@
 
     </LinearLayout>
 
+    <!-- Поддержка -->
     <LinearLayout
         style="@style/SettingButton">
 
@@ -75,6 +78,7 @@
 
     </LinearLayout>
 
+    <!-- Пользовательское соглашение -->
     <LinearLayout
         style="@style/SettingButton">
 
