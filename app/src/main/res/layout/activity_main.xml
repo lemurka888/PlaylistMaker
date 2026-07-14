@@ -30,51 +30,24 @@
 
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:id="@+id/btnSearch"
+            style="@style/MainMenuButton"
             android:text="@string/search"
-            android:textStyle="bold"
-            android:textAllCaps="false"
             app:icon="@drawable/lupa"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/black"
-            android:textColor="@color/black"
-            app:cornerRadius="16dp"
             android:layout_marginBottom="16dp"/>
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:id="@+id/btnMedia"
+            style="@style/MainMenuButton"
             android:text="@string/media"
-            android:textStyle="bold"
-            android:textAllCaps="false"
             app:icon="@drawable/nota"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/black"
-            android:textColor="@color/black"
-            app:cornerRadius="16dp"
             android:layout_marginBottom="16dp"/>
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/white"
+            android:id="@+id/btnSetting"
+            style="@style/MainMenuButton"
             android:text="@string/setting"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            app:icon="@drawable/nastroika"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            app:iconTint="@color/black"
-            android:textColor="@color/black"
-            app:cornerRadius="16dp" />
+            app:icon="@drawable/nastroika" />
 
     </LinearLayout>
 </LinearLayout>

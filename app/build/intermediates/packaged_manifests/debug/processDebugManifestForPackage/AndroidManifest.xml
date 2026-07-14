@@ -28,6 +28,15 @@
         android:testOnly="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar" >
         <activity
+            android:name="com.practicum.playlistmaker.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.practicum.playlistmaker.Mediateka"
+            android:exported="false" />
+        <activity
+            android:name="com.practicum.playlistmaker.SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name="com.practicum.playlistmaker.MainActivity"
             android:exported="true" >
             <intent-filter>

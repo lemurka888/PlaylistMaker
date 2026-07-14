@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,41 +12,33 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-    
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/btnback" />
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/back_button_size"
+            android:layout_height="@dimen/back_button_size"
+            android:src="@drawable/btnback" />
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/setting"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginStart="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        style="@style/SettingButton"
         android:layout_marginBottom="16dp">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/dark_theme"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            style="@style/SettingText"
+            android:text="@string/dark_theme" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchDarkTheme"
@@ -55,74 +48,42 @@
             app:trackTint="@color/blue" />
 
     </LinearLayout>
-    
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="18dp">
+        style="@style/SettingButton">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/share"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            style="@style/SettingText"
+            android:text="@string/share" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            style="@style/SettingIcon"
             android:src="@drawable/share" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="18dp">
+        style="@style/SettingButton">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/support"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            style="@style/SettingText"
+            android:text="@string/support" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            style="@style/SettingIcon"
             android:src="@drawable/support" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        style="@style/SettingButton">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/user_agree"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            style="@style/SettingText"
+            android:text="@string/user_agree" />
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            style="@style/SettingIcon"
             android:src="@drawable/dalee" />
 
     </LinearLayout>

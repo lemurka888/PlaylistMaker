@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-25:12
-INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-25:12
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-34:12
+INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:1-34:12
 MERGED from [com.google.android.material:material:1.13.0] /Users/touru31/.gradle/caches/9.3.1/transforms/92efe575075fe2febad77820dd36795f/transformed/material-1.13.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] /Users/touru31/.gradle/caches/9.3.1/transforms/14e6834047605c15ae7a51a3b2bc01d7/transformed/constraintlayout-2.2.1/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat-resources:1.7.1] /Users/touru31/.gradle/caches/9.3.1/transforms/78b9bc818841dc30609e30f5800b5d6d/transformed/appcompat-resources-1.7.1/AndroidManifest.xml:2:1-7:12
@@ -56,8 +56,8 @@ MERGED from [androidx.compose.runtime:runtime-annotation-android:1.9.0] /Users/t
 	xmlns:android
 		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:5:5-23:19
-INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:5:5-23:19
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:5:5-32:19
+INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:5:5-32:19
 MERGED from [com.google.android.material:material:1.13.0] /Users/touru31/.gradle/caches/9.3.1/transforms/92efe575075fe2febad77820dd36795f/transformed/material-1.13.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.13.0] /Users/touru31/.gradle/caches/9.3.1/transforms/92efe575075fe2febad77820dd36795f/transformed/material-1.13.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] /Users/touru31/.gradle/caches/9.3.1/transforms/14e6834047605c15ae7a51a3b2bc01d7/transformed/constraintlayout-2.2.1/AndroidManifest.xml:7:5-20
@@ -94,22 +94,40 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/touru31/.gradle/cach
 		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:13:9-77
 	android:dataExtractionRules
 		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:7:9-65
-activity#com.practicum.playlistmaker.MainActivity
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:14:9-22:20
+activity#com.practicum.playlistmaker.SearchActivity
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:14:9-16:40
 	android:exported
-		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:16:13-36
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:16:13-37
 	android:name
-		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:15:13-41
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:15:13-43
+activity#com.practicum.playlistmaker.Mediateka
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:17:9-19:40
+	android:exported
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:19:13-37
+	android:name
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:18:13-38
+activity#com.practicum.playlistmaker.SettingsActivity
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:20:9-22:40
+	android:exported
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:22:13-37
+	android:name
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:21:13-45
+activity#com.practicum.playlistmaker.MainActivity
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:23:9-31:20
+	android:exported
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:24:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:17:13-21:29
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:18:17-69
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:27:17-69
 	android:name
-		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:18:25-66
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:27:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:20:17-77
+ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:29:17-77
 	android:name
-		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:20:27-74
+		ADDED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml:29:27-74
 uses-sdk
 INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/AndroidManifest.xml

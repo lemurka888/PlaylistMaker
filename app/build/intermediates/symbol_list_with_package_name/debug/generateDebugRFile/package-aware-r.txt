@@ -2,6 +2,7 @@ com.practicum.playlistmaker
 color black
 color blue
 color white
+dimen back_button_size
 drawable btnback
 drawable dalee
 drawable ic_launcher_background
@@ -12,8 +13,15 @@ drawable nota
 drawable poster
 drawable share
 drawable support
+id btnBack
+id btnMedia
+id btnSearch
+id btnSetting
+id main
 id switchDarkTheme
 layout activity_main
+layout activity_mediateka
+layout activity_search
 layout activity_settings
 mipmap ic_launcher
 mipmap ic_launcher_round
@@ -26,6 +34,10 @@ string share
 string support
 string user_agree
 style Base_Theme_PlaylistMaker
+style MainMenuButton
+style SettingButton
+style SettingIcon
+style SettingText
 style Theme_PlaylistMaker
 xml backup_rules
 xml data_extraction_rules

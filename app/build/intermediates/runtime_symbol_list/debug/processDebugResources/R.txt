@@ -2511,6 +2511,7 @@ int dimen abc_text_size_subtitle_material_toolbar 0x7f06004e
 int dimen abc_text_size_title_material 0x7f06004f
 int dimen abc_text_size_title_material_toolbar 0x7f060050
 int dimen appcompat_dialog_background_inset 0x7f060051
+int dimen back_button_size 0x7f060407
 int dimen cardview_compat_inset_shadow 0x7f060052
 int dimen cardview_default_elevation 0x7f060053
 int dimen cardview_default_radius 0x7f060054
@@ -3766,6 +3767,10 @@ int id bounce 0x7f080065
 int id bounceBoth 0x7f080066
 int id bounceEnd 0x7f080067
 int id bounceStart 0x7f080068
+int id btnBack 0x7f080210
+int id btnMedia 0x7f08020c
+int id btnSearch 0x7f08020d
+int id btnSetting 0x7f08020e
 int id buttonPanel 0x7f080069
 int id cache_measures 0x7f08006a
 int id callMeasure 0x7f08006b
@@ -3913,6 +3918,7 @@ int id linear 0x7f0800f8
 int id listMode 0x7f0800f9
 int id list_item 0x7f0800fa
 int id m3_side_sheet 0x7f0800fb
+int id main 0x7f08020f
 int id marquee 0x7f0800fc
 int id masked 0x7f0800fd
 int id match_constraint 0x7f0800fe
@@ -4303,6 +4309,8 @@ int layout abc_search_view 0x7f0b0019
 int layout abc_select_dialog_material 0x7f0b001a
 int layout abc_tooltip 0x7f0b001b
 int layout activity_main 0x7f0b001c
+int layout activity_mediateka 0x7f0b006f
+int layout activity_search 0x7f0b0070
 int layout activity_settings 0x7f0b001d
 int layout custom_dialog 0x7f0b001e
 int layout design_bottom_navigation_item 0x7f0b001f
@@ -4862,6 +4870,7 @@ int style Base_Widget_MaterialComponents_TextView 0x7f100122
 int style CardView 0x7f100123
 int style CardView_Dark 0x7f100124
 int style CardView_Light 0x7f100125
+int style MainMenuButton 0x7f1004cf
 int style MaterialAlertDialog_Material3 0x7f100126
 int style MaterialAlertDialog_Material3_Animation 0x7f100127
 int style MaterialAlertDialog_Material3_Body_Text 0x7f100128
@@ -4919,6 +4928,9 @@ int style RtlOverlay_Widget_AppCompat_Search_DropDown_Text 0x7f10015b
 int style RtlOverlay_Widget_AppCompat_SearchView_MagIcon 0x7f10015c
 int style RtlUnderlay_Widget_AppCompat_ActionButton 0x7f10015d
 int style RtlUnderlay_Widget_AppCompat_ActionButton_Overflow 0x7f10015e
+int style SettingButton 0x7f1004d0
+int style SettingIcon 0x7f1004d1
+int style SettingText 0x7f1004d2
 int style ShapeAppearance_M3_Comp_Badge_Large_Shape 0x7f10015f
 int style ShapeAppearance_M3_Comp_Badge_Shape 0x7f100160
 int style ShapeAppearance_M3_Comp_BottomAppBar_Container_Shape 0x7f100161
