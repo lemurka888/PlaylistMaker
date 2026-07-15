@@ -1,7 +1,0 @@
-com.practicum.playlistmaker.app-pngs-0 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/build/generated/res/pngs/debug
-com.practicum.playlistmaker.app-updated_navigation_xml-1 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/build/generated/updated_navigation_xml/debug
-com.practicum.playlistmaker.app-packageDebugResources-2 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
-com.practicum.playlistmaker.app-packageDebugResources-3 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
-com.practicum.playlistmaker.app-debug-4 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/build/intermediates/merged_res/debug/mergeDebugResources
-com.practicum.playlistmaker.app-debug-5 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/debug/res
-com.practicum.playlistmaker.app-main-6 /Users/touru31/AndroidStudioProjects/PlaylistMaker/app/src/main/res
