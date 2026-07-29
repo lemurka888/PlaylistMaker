@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="?attr/colorSurface">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
             android:id="@+id/btnBack"
             android:layout_width="@dimen/back_button_size"
             android:layout_height="@dimen/back_button_size"
-            android:src="@drawable/btnback" />
+            android:src="@drawable/btnback"
+            app:tint="?attr/colorOnSurface"/>
 
 
 
@@ -26,9 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/setting"
-            android:textColor="@color/black"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="22sp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            style="@style/TitleText"/>
 
     </LinearLayout>
 
@@ -38,56 +40,66 @@
 
         <TextView
             style="@style/SettingText"
-            android:text="@string/dark_theme" />
+            android:text="@string/dark_theme"
+            android:textColor="?attr/colorOnSurface"/>
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switchDarkTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:thumbTint="@color/black"
-            app:trackTint="@color/blue" />
+            app:thumbTint="@color/gray"
+            app:trackTint="@color/light_gray" />
 
     </LinearLayout>
 
     <!-- Поделиться -->
     <LinearLayout
+        android:id="@+id/btnShare"
         style="@style/SettingButton">
 
         <TextView
             style="@style/SettingText"
-            android:text="@string/share" />
+            android:text="@string/share"
+            android:textColor="?attr/colorOnSurface"/>
 
         <ImageView
             style="@style/SettingIcon"
-            android:src="@drawable/share" />
+            android:src="@drawable/share"
+            app:tint="@color/iconTint"/>
 
     </LinearLayout>
 
     <!-- Поддержка -->
     <LinearLayout
+        android:id="@+id/btnSupport"
         style="@style/SettingButton">
 
         <TextView
             style="@style/SettingText"
-            android:text="@string/support" />
+            android:text="@string/support"
+            android:textColor="?attr/colorOnSurface"/>
 
         <ImageView
             style="@style/SettingIcon"
-            android:src="@drawable/support" />
+            android:src="@drawable/support"
+            app:tint="@color/iconTint"/>
 
     </LinearLayout>
 
     <!-- Пользовательское соглашение -->
     <LinearLayout
+        android:id="@+id/btnUserAgree"
         style="@style/SettingButton">
 
         <TextView
             style="@style/SettingText"
-            android:text="@string/user_agree" />
+            android:text="@string/user_agree"
+            android:textColor="?attr/colorOnSurface"/>
 
         <ImageView
             style="@style/SettingIcon"
-            android:src="@drawable/dalee" />
+            android:src="@drawable/dalee"
+            app:tint="@color/iconTint"/>
 
     </LinearLayout>
 </LinearLayout>
