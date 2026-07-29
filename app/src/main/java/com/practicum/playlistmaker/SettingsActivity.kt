@@ -31,7 +31,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_message)))
         }
 
-        btnSupport.setOnClickListener {
+        btnSupport.setOnTouchListener { _, _ ->
             val supportIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:")
                 putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.support_email)))
@@ -39,6 +39,7 @@ class SettingsActivity : AppCompatActivity() {
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.support_body))
             }
             startActivity(supportIntent)
+            true
         }
 
         btnUserAgree.setOnClickListener {
