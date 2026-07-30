@@ -7,7 +7,7 @@
     <color name="light_gray">#E6E8EB</color>
     <color name="search_hint">#AEAFB4</color>
 
-    <!--экран настройки. цвет текста и иконок-->
+    <!--экран настройки, цвет текста и иконок-->
     <color name="textPrimary">#1A1B22</color>
     <color name="iconTint">#AEAFB4</color>
 

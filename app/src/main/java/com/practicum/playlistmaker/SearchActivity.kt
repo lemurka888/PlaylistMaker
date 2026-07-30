@@ -1,5 +1,5 @@
 package com.practicum.playlistmaker
-
+//настройки экрана
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable

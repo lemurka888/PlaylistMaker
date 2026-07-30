@@ -7,7 +7,7 @@
     android:background="@color/blue"
     android:padding="16dp">
 
-
+<!-- Главный экран -->
 
     <TextView
         android:layout_width="wrap_content"
