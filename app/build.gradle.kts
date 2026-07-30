@@ -1,7 +1,8 @@
+
 plugins {
     alias(libs.plugins.android.application)
 }
-
+//правка
 android {
     namespace = "com.practicum.playlistmaker"
     compileSdk {
