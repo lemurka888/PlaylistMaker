@@ -1,10 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchActivity">
+    android:orientation="vertical"
+    android:background="?attr/colorSurface">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/back_button_size"
+            android:layout_height="@dimen/back_button_size"
+            android:src="@drawable/btnback"
+            app:tint="?attr/colorOnSurface"/>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="22sp"
+            android:layout_marginStart="8dp"
+            style="@style/TitleText"/>
+
+    </LinearLayout>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp">
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/search_background"
+            android:hint="@string/search_hint"
+            android:textColorHint="@color/search_hint"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:drawableStart="@drawable/lupa"
+            android:drawableTint="@color/search_hint"
+            android:drawablePadding="8dp"
+            android:paddingStart="12dp"/>
+        
+        <ImageView
+            android:id="@+id/btnClearSearch"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/x_clear"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            app:tint="@color/search_hint" />
+
+    </FrameLayout>
+</LinearLayout>

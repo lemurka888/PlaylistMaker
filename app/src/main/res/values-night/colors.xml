@@ -2,14 +2,13 @@
 <resources>
     <color name="black">#1A1B22</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="blue">#3772E7</color>
-    <color name="gray">#AEAFB4</color>
-    <color name="light_gray">#E6E8EB</color>
-    <color name="search_hint">#AEAFB4</color>
+    <color name="blue">#1A1B22</color>
+    <color name="search_hint">#1A1B22</color>
 
     <!--экран настройки. цвет текста и иконок-->
-    <color name="textPrimary">#1A1B22</color>
-    <color name="iconTint">#AEAFB4</color>
+    <color name="textPrimary">#FFFFFFFF</color>
+    <color name="iconTint">#FFFFFFFF</color>
+
 
     <!--<color name="buttonBackground">#FFFFFFFF</color>
     <color name="buttonText">#1A1B22</color>-->
