@@ -6,6 +6,8 @@
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
     <color name="search_hint">#AEAFB4</color>
+    <color name="search_text">#1A1B22</color>
+    <color name="search_background">#E6E8EB</color>
 
     <!--экран настройки. цвет текста и иконок-->
     <color name="textPrimary">#1A1B22</color>
