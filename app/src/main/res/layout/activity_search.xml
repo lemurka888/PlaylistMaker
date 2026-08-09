@@ -47,7 +47,7 @@
             android:background="@drawable/search_background"
             android:hint="@string/search_hint"
             android:textColorHint="@color/search_hint"
-            android:textColor="?attr/colorOnSurface"
+            android:textColor="@color/search_text"
             android:textSize="16sp"
             android:maxLines="1"
             android:inputType="text"
