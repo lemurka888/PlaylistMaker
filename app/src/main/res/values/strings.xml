@@ -4,6 +4,10 @@
     <string name="search_hint">Поиск</string>
     <string name="media">Медиатека</string>
     <string name="setting">Настройки</string>
+    <string name="retry">Обновить</string>
+    <string name="empty_placeholder">Ничего не нашлось</string>
+    <string name="error_placeholder_title">Проблемы со связью</string>
+    <string name="error_placeholder_subtitle">Загрузка не удалась. Проверьте подключение к интернету</string>
     <string name="dark_theme">Темная тема</string>
     <string name="share">Поделиться приложением</string>
     <string name="support">Написать в поддержку</string>

@@ -9,6 +9,7 @@
     <color name="search_text">#1A1B22</color>
     <color name="artist_time">#FFFFFFFF</color>
     <color name="main_background">#1A1B22</color>
+    <color name="retry_background">#FFFFFFFF</color>
 
     <!-- белый фон в тёмной теме -->
     <color name="search_background">#FFFFFF</color>
