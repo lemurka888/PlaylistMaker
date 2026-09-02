@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.practicum.playlistmaker.data.Track
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TrackAdapter(
-    private val tracks: List<Track>
+    private var tracks: List<Track>
 ) : RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -28,6 +30,11 @@ class TrackAdapter(
         return tracks.size
     }
 
+    fun updateTracks(newTracks: List<Track>) {
+        tracks = newTracks
+        notifyDataSetChanged()
+    }
+
     inner class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // связываем элементы из разметки
         private val tvTrackName: TextView = itemView.findViewById(R.id.tvTrackName)
@@ -36,13 +43,16 @@ class TrackAdapter(
 
         fun bind(track: Track) {
             tvTrackName.text = track.trackName
-            tvArtistTime.text = "${track.artistName} • ${track.trackTime}"
+            val dateFormat = SimpleDateFormat("mm:ss", Locale.getDefault())
+            val formattedTime = dateFormat.format(track.trackTimeMillis)
+            tvArtistTime.text = "${track.artistName} • $formattedTime"
 
             Glide.with(itemView)
                 .load(track.artworkUrl100)
                 .centerCrop()
-                .transform(RoundedCorners(2))
+                .transform(RoundedCorners(8))
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .into(ivTrackCover)
         }
     }

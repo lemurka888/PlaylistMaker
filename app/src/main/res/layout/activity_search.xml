@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="?attr/colorSurface">
 
+    <!-- ШАПКА -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +35,8 @@
 
     </LinearLayout>
     
+
+    <!-- ПОИСК -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="36dp"
@@ -51,6 +54,9 @@
             android:textSize="16sp"
             android:maxLines="1"
             android:inputType="text"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:focusableInTouchMode="true"
             android:drawableStart="@drawable/lupa"
             android:drawableTint="@color/search_hint"
             android:drawablePadding="8dp"
@@ -65,13 +71,89 @@
             android:layout_marginEnd="12dp"
             android:visibility="gone"
             app:tint="@color/search_hint" />
-
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    <!-- СПИСОК ТРЕКОВ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTracks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:scrollbars="vertical" />
+
+    <!-- Плейсхолдер (нет результатов) -->
+    <LinearLayout
+        android:id="@+id/emptyPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="16dp">
+        
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_empty_placeholder" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_placeholder"
+            android:textSize="20sp"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+
+    <!-- Плейсхолдер (ошибка сервера) -->
+    <LinearLayout
+        android:id="@+id/errorPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_error_placeholder" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_placeholder_title"
+            android:textSize="20sp"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="16dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_placeholder_subtitle"
+            android:textSize="20sp"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:maxLines="2"/>
+
+        <Button
+            android:id="@+id/retryBtn"
+            android:text="@string/retry"
+            android:backgroundTint="@color/retry_background"
+            android:textColor="?attr/colorSurface"
+            android:textSize="14sp"
+            android:layout_marginTop="24dp"
+            style="@style/RetryButton" />
+    </LinearLayout>
+    </FrameLayout>
+
+
 </LinearLayout>
