@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/search"
             android:textColor="?attr/colorOnSurface"
-            android:textSize="22sp"
+            android:textSize="@dimen/search_title_text_size"
             android:layout_marginStart="8dp"
             style="@style/TitleText"/>
 
@@ -73,18 +73,58 @@
             app:tint="@color/search_hint" />
     </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1">
 
-    <!-- СПИСОК ТРЕКОВ -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTracks"
+       <!-- СПИСОК ТРЕКОВ -->
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/rvTracks"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginTop="16dp"
+           android:scrollbars="vertical" />
+
+       <!--ИСТОРИЯ-->
+       <LinearLayout
+        android:id="@+id/historyContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/youSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/you_search"
+            android:textSize="20sp"
+            android:textColor="?attr/colorOnSurface"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+        <Button
+            android:id="@+id/btnClearHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/clear_history"
+            android:textSize="14sp"
+            android:backgroundTint="@color/retry_background"
+            android:textColor="?attr/colorSurface"
+            android:layout_marginTop="24dp"
+            style="@style/RetryButton" />
+    </LinearLayout>
+
+
 
     <!-- Плейсхолдер (нет результатов) -->
     <LinearLayout

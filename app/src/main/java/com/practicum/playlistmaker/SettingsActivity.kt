@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +17,18 @@ class SettingsActivity : AppCompatActivity() {
         val btnShare = findViewById<LinearLayout>(R.id.btnShare)
         val btnSupport = findViewById<LinearLayout>(R.id.btnSupport)
         val btnUserAgree = findViewById<LinearLayout>(R.id.btnUserAgree)
+        val switchDarkTheme = findViewById<SwitchMaterial>(R.id.switchDarkTheme)
 
         btnBack.setOnClickListener {
             val btnBackIntent = Intent(this, MainActivity::class.java)
             startActivity(btnBackIntent)
+            finish()
+        }
+
+        val app = application as App
+        switchDarkTheme.isChecked = app.darkTheme
+        switchDarkTheme.setOnCheckedChangeListener { _, checked ->
+            app.switchTheme(checked)
         }
 
         btnShare.setOnClickListener {
