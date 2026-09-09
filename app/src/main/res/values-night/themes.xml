@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
 
         <!--экран настройки-->
@@ -9,7 +9,6 @@
         <item name="colorPrimary">@color/blue</item>
     </style>
 
-    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
 
     <style name="TitleText">
         <item name="android:fontFamily">@font/ys_display_medium</item>
@@ -37,6 +36,11 @@
         <item name="cornerRadius">16dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textAppearance">@style/TitleText</item>
+    </style>
+
+    <style name="SwitchStyle" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="thumbTint">@color/blue</item>
+        <item name="trackTint">@color/switch_track_dark</item>
     </style>
 
     <style name="SettingButton" >

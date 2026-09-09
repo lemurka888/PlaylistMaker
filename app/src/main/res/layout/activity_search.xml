@@ -90,7 +90,7 @@
        <LinearLayout
         android:id="@+id/historyContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -103,12 +103,14 @@
             android:textColor="?attr/colorOnSurface"
             android:gravity="center"
             android:paddingTop="16dp"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp"
+            style="@style/TitleText"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHistory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:scrollbars="vertical" />
 
         <Button
