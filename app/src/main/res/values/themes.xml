@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PlaylistMaker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
 
         <!--экран настройки-->
@@ -9,8 +9,6 @@
         <item name="colorPrimary">@color/blue</item>
     </style>
 
-
-    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
 
     <style name="TitleText">
         <item name="android:fontFamily">@font/ys_display_medium</item>
@@ -54,10 +52,17 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">48dp</item>
         <!--<item name="android:cornerRadius">18dp</item>-->
-        <item name="android:paddingHorizontal">6dp</item>
-        <item name="android:paddingVertical">6dp</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:paddingVertical">10dp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="SwitchStyle" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="thumbTint">@color/gray</item>
+        <item name="trackTint">@color/light_gray</item>
+        <item name="android:alpha">0.6</item>
     </style>
 
     <style name="SettingText" >

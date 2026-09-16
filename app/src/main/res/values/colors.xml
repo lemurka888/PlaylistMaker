@@ -3,6 +3,7 @@
     <color name="black">#1A1B22</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#3772E7</color>
+    <color name="light_blue">#9FBBF3</color>
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
     <color name="search_hint">#AEAFB4</color>
@@ -11,6 +12,7 @@
     <color name="retry_background">#1A1B22</color>
     <color name="artist_time">#AEAFB4</color>
     <color name="main_background">#3772E7</color>
+    <color name="switch_track_light">#99E6E8EB</color>
 
     <!--экран настройки. цвет текста и иконок-->
     <color name="textPrimary">#1A1B22</color>

@@ -3,6 +3,7 @@
     <color name="black">#1A1B22</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#3772E7</color>
+    <color name="light_blue">#9FBBF3</color>
     <color name="gray">#AEAFB4</color>
     <color name="light_gray">#E6E8EB</color>
     <color name="search_hint">#1A1B22</color>
@@ -10,6 +11,7 @@
     <color name="artist_time">#FFFFFFFF</color>
     <color name="main_background">#1A1B22</color>
     <color name="retry_background">#FFFFFFFF</color>
+    <color name="switch_track_dark">#809FBBF3</color>
 
     <!-- белый фон в тёмной теме -->
     <color name="search_background">#FFFFFF</color>
