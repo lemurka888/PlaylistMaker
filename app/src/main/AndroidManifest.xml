@@ -18,6 +18,8 @@
         <activity
             android:name=".SearchActivity"
             android:exported="false" />
+        <activity android:name=".PlayerActivity"
+            android:exported="false" />
         <activity
             android:name=".Mediateka"
             android:exported="false" />

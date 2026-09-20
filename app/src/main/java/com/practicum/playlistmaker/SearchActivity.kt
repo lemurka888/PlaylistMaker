@@ -13,7 +13,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.practicum.playlistmaker.data.Track
@@ -48,7 +52,13 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_search)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         // ИНИЦИАЛИЗАЦИЯ ВСЕХ View
         searchEditText = findViewById(R.id.searchEditText)
@@ -76,6 +86,11 @@ class SearchActivity : AppCompatActivity() {
             onItemClick = { track ->
             searchHistory.addTrack(track)
                 updateHistoryVisibility()
+
+                //переход на экран плеера
+                val intent = Intent(this, PlayerActivity::class.java)
+                intent.putExtra("track", track)
+                startActivity(intent)
         }
         )
         recyclerView.adapter = adapter
@@ -87,6 +102,11 @@ class SearchActivity : AppCompatActivity() {
             onItemClick = { track ->
                 searchHistory.addTrack(track)
                 updateHistoryVisibility()
+
+                //переход на экран плеера
+                val intent = Intent(this, PlayerActivity::class.java)
+                intent.putExtra("track", track)
+                startActivity(intent)
             }
         )
         rvHistory.adapter = historyAdapter
