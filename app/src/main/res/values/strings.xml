@@ -19,4 +19,9 @@
     <string name="user_agree_url">https://yandex.ru/legal/practicum_offer/ru/</string>
     <string name="clear_history">Очистить историю</string>
     <string name="you_search">Вы искали</string>
+    <string name="country">Страна</string>
+    <string name="genre">Жанр</string>
+    <string name="year">Год</string>
+    <string name="album">Альбом</string>
+    <string name="duration">Длительность</string>
 </resources>
