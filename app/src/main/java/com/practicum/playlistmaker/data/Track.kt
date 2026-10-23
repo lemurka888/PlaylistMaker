@@ -3,7 +3,7 @@ package com.practicum.playlistmaker.data
 import java.io.Serializable
 
 data class Track(
-    val trackId: Long?, //
+    val trackId: String?, //
     val trackName: String?, // Название композиции
     val artistName: String?, // Имя исполнителя
     val trackTimeMillis: Long?, // Продолжительность трека в миллисекундах
@@ -11,7 +11,8 @@ data class Track(
     val releaseDate: String?, // Год релиза трека
     val primaryGenreName: String?, // Жанр трека
     val country: String?, // Страна исполнителя
-    val artworkUrl100: String? // Ссылка на изображение обложки
+    val artworkUrl100: String?, // Ссылка на изображение обложки
+    val previewUrl: String?
 ) : Serializable {
 
     fun getCoverArtwork(): String {

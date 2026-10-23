@@ -1,7 +1,11 @@
 package com.practicum.playlistmaker
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +20,32 @@ import java.util.Locale
 import androidx.activity.enableEdgeToEdge
 
 class PlayerActivity : AppCompatActivity() {
+
+    companion object {
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+        const val EXTRA_TRACK = "track"
+    }
+
+    private var playerState = STATE_DEFAULT
+
+    private var mediaPlayer = MediaPlayer()
+    private lateinit var playButton: ImageView
+    private lateinit var tvCurrentTime: TextView
+    private lateinit var handler: Handler
+    private val updateTimeRunnable = object : Runnable {
+        override fun run() {
+            if (playerState == STATE_PLAYING) {
+                tvCurrentTime.text = SimpleDateFormat(
+                    "mm:ss",
+                    Locale.getDefault()
+                ).format(mediaPlayer.currentPosition)
+                handler.postDelayed(this, 300)
+            }
+        }
+    }
 
     // View — как поля класса
     private lateinit var btnBack: ImageView
@@ -58,13 +88,75 @@ class PlayerActivity : AppCompatActivity() {
         tvReleaseValue = findViewById(R.id.tvReleaseValue)
         tvGenreValue = findViewById(R.id.tvGenreValue)
         tvCountryValue = findViewById(R.id.tvCountryValue)
+        playButton = findViewById(R.id.btnPlay)
 
-        val track = intent.getSerializableExtra("track") as? Track
+        tvCurrentTime = findViewById(R.id.tvCurrentTime)
+        handler = Handler(Looper.getMainLooper())
+
+        val track = intent.getSerializableExtra(EXTRA_TRACK) as? Track
         if (track != null) {
             bindTrack(track)
+            preparePlayer(track.previewUrl)
+        }
+
+        playButton.setOnClickListener {
+            playbackControl()
         }
 
         btnBack.setOnClickListener { finish() }
+    }
+
+    private fun preparePlayer(url: String?) {
+        if (url.isNullOrEmpty()) {
+            playButton.isEnabled = false
+            return
+        }
+
+        mediaPlayer.setDataSource(url)
+        mediaPlayer.prepareAsync()
+
+        mediaPlayer.setOnPreparedListener {
+            playButton.isEnabled = true
+            playerState = STATE_PREPARED
+        }
+
+        mediaPlayer.setOnCompletionListener {
+            playerState = STATE_PREPARED
+            tvCurrentTime.text = "00:00"
+            handler.removeCallbacks(updateTimeRunnable)
+        }
+    }
+
+    private fun startPlayer() {
+        mediaPlayer.start()
+        playButton.setImageResource(R.drawable.ic_pause)
+        playerState = STATE_PLAYING
+        handler.post(updateTimeRunnable)
+    }
+
+    private fun pausePlayer() {
+        mediaPlayer.pause()
+        playButton.setImageResource(R.drawable.ic_play)
+        playerState = STATE_PAUSED
+        handler.removeCallbacks(updateTimeRunnable)
+    }
+
+    private fun playbackControl() {
+        when (playerState) {
+            STATE_PLAYING -> pausePlayer()
+            STATE_PREPARED, STATE_PAUSED -> startPlayer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pausePlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(updateTimeRunnable)
+        mediaPlayer.release()
     }
 
     private fun bindTrack(track: Track) {

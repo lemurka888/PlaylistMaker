@@ -26,8 +26,16 @@ import com.practicum.playlistmaker.network.TrackResponse
 import retrofit2.Response
 import retrofit2.Call
 import retrofit2.Callback
+import android.os.Handler
+import android.os.Looper
+import android.widget.ProgressBar
 
 class SearchActivity : AppCompatActivity() {
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
 
     //ВСЕ View
     private lateinit var searchEditText: EditText
@@ -46,9 +54,20 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var adapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
     private lateinit var searchHistory: SearchHistory
+    private lateinit var progressBar: ProgressBar
 
     private var searchQuery: String  = ""
     private var currentCall: Call<TrackResponse>? = null
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val searchRunnable = Runnable {
+        val query = searchEditText.text.toString().trim()
+        if (query.isNotEmpty()) {
+            searchTracks(query)
+        }
+    }
+
+    private var isClickAllowed = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +87,7 @@ class SearchActivity : AppCompatActivity() {
         emptyPlaceholder = findViewById(R.id.emptyPlaceholder)
         errorPlaceholder = findViewById(R.id.errorPlaceholder)
         retryBtn = findViewById(R.id.retryBtn)
+        progressBar = findViewById(R.id.progressBar)
 
         //ИСТОРИЯ
         historyContainer = findViewById(R.id.historyContainer)
@@ -84,14 +104,16 @@ class SearchActivity : AppCompatActivity() {
         adapter = TrackAdapter(
             tracks = emptyList(),
             onItemClick = { track ->
-            searchHistory.addTrack(track)
-                updateHistoryVisibility()
+                if (clickDebounce()) {
+                    searchHistory.addTrack(track)
+                    updateHistoryVisibility()
 
-                //переход на экран плеера
-                val intent = Intent(this, PlayerActivity::class.java)
-                intent.putExtra("track", track)
-                startActivity(intent)
-        }
+                    //переход на экран плеера
+                    val intent = Intent(this, PlayerActivity::class.java)
+                    intent.putExtra(PlayerActivity.EXTRA_TRACK, track)
+                    startActivity(intent)
+                }
+            }
         )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -100,13 +122,15 @@ class SearchActivity : AppCompatActivity() {
         historyAdapter = TrackAdapter(
             tracks = emptyList(),
             onItemClick = { track ->
-                searchHistory.addTrack(track)
-                updateHistoryVisibility()
+                if (clickDebounce()) {
+                    searchHistory.addTrack(track)
+                    updateHistoryVisibility()
 
-                //переход на экран плеера
-                val intent = Intent(this, PlayerActivity::class.java)
-                intent.putExtra("track", track)
-                startActivity(intent)
+                    //переход на экран плеера
+                    val intent = Intent(this, PlayerActivity::class.java)
+                    intent.putExtra(PlayerActivity.EXTRA_TRACK, track)
+                    startActivity(intent)
+                }
             }
         )
         rvHistory.adapter = historyAdapter
@@ -142,6 +166,7 @@ class SearchActivity : AppCompatActivity() {
                     updateHistoryVisibility()
                 }else{
                     historyContainer.visibility = View.GONE
+                    searchDebounce()
                 }
             }
         })
@@ -198,6 +223,20 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable,SEARCH_DEBOUNCE_DELAY)
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({isClickAllowed = true}, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
     private fun updateHistoryVisibility() {
         val history = searchHistory.getHistory()
         val isSearchEmpty = searchEditText.text.isNullOrEmpty()
@@ -223,17 +262,21 @@ class SearchActivity : AppCompatActivity() {
         super.onDestroy()
         currentCall?.cancel()
         currentCall = null
+        handler.removeCallbacks(searchRunnable)
+        handler.removeCallbacksAndMessages(null)
     }
 
     private fun searchTracks(query: String) {
         currentCall?.cancel()
         searchQuery = query
         hideAll()
+        progressBar.visibility = View.VISIBLE
 
         currentCall = RetrofitClient.api.searchTracks(query)
         currentCall?.enqueue(object : Callback<TrackResponse> {
             override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
                 if (call.isCanceled) return
+                progressBar.visibility = View.GONE
 
                 if (response.code() == 200) {
                     val tracks = response.body()?.results ?: emptyList()
@@ -249,6 +292,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
                 if (call.isCanceled) return
+                progressBar.visibility = View.GONE
                 showError()
             }
         })
@@ -280,6 +324,7 @@ private fun showTracks(tracks: List<Track>) {
         recyclerView.visibility = View.GONE
         emptyPlaceholder.visibility = View.GONE
         errorPlaceholder.visibility = View.GONE
+        progressBar.visibility = View.GONE
     }
 
     private fun updateClearButtonVisibility() {
