@@ -16,18 +16,18 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.PlaylistMaker">
         <activity
-            android:name=".SearchActivity"
+            android:name=".presentation.SearchActivity"
             android:exported="false" />
-        <activity android:name=".PlayerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Mediateka"
+        <activity android:name=".presentation.PlayerActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".presentation.Mediateka"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
