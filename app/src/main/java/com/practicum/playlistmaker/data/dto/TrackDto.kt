@@ -1,8 +1,6 @@
-package com.practicum.playlistmaker.data
+package com.practicum.playlistmaker.data.dto
 
-import java.io.Serializable
-
-data class Track(
+data class TrackDto(
     val trackId: String?, //
     val trackName: String?, // Название композиции
     val artistName: String?, // Имя исполнителя
@@ -13,9 +11,4 @@ data class Track(
     val country: String?, // Страна исполнителя
     val artworkUrl100: String?, // Ссылка на изображение обложки
     val previewUrl: String?
-) : Serializable {
-
-    fun getCoverArtwork(): String {
-        return artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg") ?: ""
-    }
-}
+)

@@ -1,17 +1,18 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.content.Intent
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,15 +21,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.data.Track
-import com.practicum.playlistmaker.network.RetrofitClient
-import com.practicum.playlistmaker.network.TrackResponse
-import retrofit2.Response
-import retrofit2.Call
-import retrofit2.Callback
-import android.os.Handler
-import android.os.Looper
-import android.widget.ProgressBar
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.presentation.TrackAdapter
+import com.practicum.playlistmaker.domain.SearchHistoryInteractor
+import com.practicum.playlistmaker.domain.SearchTracksInteractor
+import com.practicum.playlistmaker.domain.models.Track
+import com.practicum.playlistmaker.presentation.creator.Creator
 
 class SearchActivity : AppCompatActivity() {
 
@@ -53,11 +51,11 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var adapter: TrackAdapter
     private lateinit var historyAdapter: TrackAdapter
-    private lateinit var searchHistory: SearchHistory
+    private lateinit var searchHistoryInteractor: SearchHistoryInteractor
+    private lateinit var searchTracksInteractor: SearchTracksInteractor
     private lateinit var progressBar: ProgressBar
 
     private var searchQuery: String  = ""
-    private var currentCall: Call<TrackResponse>? = null
 
     private val handler = Handler(Looper.getMainLooper())
     private val searchRunnable = Runnable {
@@ -96,16 +94,16 @@ class SearchActivity : AppCompatActivity() {
         btnClearHistory = findViewById(R.id.btnClearHistory)
 
 
-        //SearchHistory
-        val sharedPref = getSharedPreferences("playlist_maker_pref", MODE_PRIVATE)
-        searchHistory = SearchHistory(sharedPref)
+        // Инициализация интеракторов
+        searchHistoryInteractor = Creator.provideSearchHistoryInteractor(this)
+        searchTracksInteractor = Creator.provideSearchTracksInteractor()
 
         // АДАПТЕР для результатов поиска
         adapter = TrackAdapter(
             tracks = emptyList(),
             onItemClick = { track ->
                 if (clickDebounce()) {
-                    searchHistory.addTrack(track)
+                    searchHistoryInteractor.addTrack(track)
                     updateHistoryVisibility()
 
                     //переход на экран плеера
@@ -123,7 +121,7 @@ class SearchActivity : AppCompatActivity() {
             tracks = emptyList(),
             onItemClick = { track ->
                 if (clickDebounce()) {
-                    searchHistory.addTrack(track)
+                    searchHistoryInteractor.addTrack(track)
                     updateHistoryVisibility()
 
                     //переход на экран плеера
@@ -139,7 +137,7 @@ class SearchActivity : AppCompatActivity() {
 
         //КНОПКА ОЧИСТКИ ИСТОРИИ
         btnClearHistory.setOnClickListener {
-            searchHistory.clearHistory()
+            searchHistoryInteractor.clearHistory()
             historyAdapter.updateTracks(emptyList())
             historyContainer.visibility = View.GONE
         }
@@ -238,7 +236,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun updateHistoryVisibility() {
-        val history = searchHistory.getHistory()
+        val history = searchHistoryInteractor.getHistory()
         val isSearchEmpty = searchEditText.text.isNullOrEmpty()
         val hasFocus = searchEditText.hasFocus()
         val hasHistory = history.isNotEmpty()
@@ -260,40 +258,25 @@ class SearchActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        currentCall?.cancel()
-        currentCall = null
         handler.removeCallbacks(searchRunnable)
         handler.removeCallbacksAndMessages(null)
     }
 
     private fun searchTracks(query: String) {
-        currentCall?.cancel()
         searchQuery = query
         hideAll()
         progressBar.visibility = View.VISIBLE
 
-        currentCall = RetrofitClient.api.searchTracks(query)
-        currentCall?.enqueue(object : Callback<TrackResponse> {
-            override fun onResponse(call: Call<TrackResponse>, response: Response<TrackResponse>) {
-                if (call.isCanceled) return
+        searchTracksInteractor.searchTracks(query, object : SearchTracksInteractor.TracksConsumer {
+            override fun consume(foundTracks: List<Track>?, errorMessage: String?) {
                 progressBar.visibility = View.GONE
-
-                if (response.code() == 200) {
-                    val tracks = response.body()?.results ?: emptyList()
-                    if (tracks.isEmpty()) {
-                        showEmpty()
-                    } else {
-                        showTracks(tracks)
-                    }
-                } else {
+                if (errorMessage != null) {
                     showError()
+                } else if (foundTracks.isNullOrEmpty()) {
+                    showEmpty()
+                } else {
+                    showTracks(foundTracks)
                 }
-            }
-
-            override fun onFailure(call: Call<TrackResponse>, t: Throwable) {
-                if (call.isCanceled) return
-                progressBar.visibility = View.GONE
-                showError()
             }
         })
     }
@@ -333,7 +316,7 @@ private fun showTracks(tracks: List<Track>) {
     }
 
     private fun hideKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(searchEditText.windowToken, 0)
     }
 
@@ -342,4 +325,3 @@ private fun showTracks(tracks: List<Track>) {
         outState.putString("SEARCH_QUERY", searchEditText.text.toString())
     }
 }
-

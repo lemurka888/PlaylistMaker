@@ -1,23 +1,23 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.presentation
 
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.practicum.playlistmaker.data.Track
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
-import androidx.activity.enableEdgeToEdge
 
 class PlayerActivity : AppCompatActivity() {
 
@@ -26,10 +26,13 @@ class PlayerActivity : AppCompatActivity() {
         private const val STATE_PREPARED = 1
         private const val STATE_PLAYING = 2
         private const val STATE_PAUSED = 3
+        private const val UPDATE_TIME_DELAY = 300L
         const val EXTRA_TRACK = "track"
     }
 
     private var playerState = STATE_DEFAULT
+
+    private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
 
     private var mediaPlayer = MediaPlayer()
     private lateinit var playButton: ImageView
@@ -38,11 +41,8 @@ class PlayerActivity : AppCompatActivity() {
     private val updateTimeRunnable = object : Runnable {
         override fun run() {
             if (playerState == STATE_PLAYING) {
-                tvCurrentTime.text = SimpleDateFormat(
-                    "mm:ss",
-                    Locale.getDefault()
-                ).format(mediaPlayer.currentPosition)
-                handler.postDelayed(this, 300)
+                tvCurrentTime.text = dateFormat.format(mediaPlayer.currentPosition)
+                handler.postDelayed(this, UPDATE_TIME_DELAY)
             }
         }
     }
@@ -113,7 +113,6 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         mediaPlayer.setDataSource(url)
-        mediaPlayer.prepareAsync()
 
         mediaPlayer.setOnPreparedListener {
             playButton.isEnabled = true
@@ -125,6 +124,8 @@ class PlayerActivity : AppCompatActivity() {
             tvCurrentTime.text = "00:00"
             handler.removeCallbacks(updateTimeRunnable)
         }
+
+        mediaPlayer.prepareAsync()
     }
 
     private fun startPlayer() {
@@ -205,7 +206,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun formatDuration(millis: Long?): String {
         if (millis == null || millis < 0) return "00:00"
-        val format = SimpleDateFormat("mm:ss", Locale.getDefault())
-        return format.format(millis)
+        return dateFormat.format(millis)
     }
 }
