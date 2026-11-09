@@ -1,7 +1,4 @@
-package com.practicum.playlistmaker.domain.impl
-
-import com.practicum.playlistmaker.domain.SettingsInteractor
-import com.practicum.playlistmaker.domain.api.SettingsRepository
+package com.practicum.playlistmaker.presentation.settings.domain
 
 class SettingsInteractorImpl(
     private val repository: SettingsRepository

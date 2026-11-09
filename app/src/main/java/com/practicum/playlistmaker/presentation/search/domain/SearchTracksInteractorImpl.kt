@@ -1,8 +1,6 @@
-package com.practicum.playlistmaker.domain.impl
+package com.practicum.playlistmaker.presentation.search.domain
 
-import com.practicum.playlistmaker.domain.SearchTracksInteractor
 import com.practicum.playlistmaker.domain.api.TrackRepository
-import com.practicum.playlistmaker.domain.models.Track
 
 class SearchTracksInteractorImpl(
     private val repository: TrackRepository

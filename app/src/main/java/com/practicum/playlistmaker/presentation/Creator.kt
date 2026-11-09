@@ -1,24 +1,30 @@
 package com.practicum.playlistmaker.presentation.creator
 
+import android.app.Application
 import android.content.Context
-import com.practicum.playlistmaker.data.network.ITunesApi
 import com.practicum.playlistmaker.data.network.RetrofitClient
-import com.practicum.playlistmaker.data.repository.SearchHistoryRepositoryImpl
-import com.practicum.playlistmaker.data.repository.SettingsRepositoryImpl
+import com.practicum.playlistmaker.presentation.search.data.SearchHistoryRepositoryImpl
+import com.practicum.playlistmaker.presentation.settings.data.SettingsRepositoryImpl
 import com.practicum.playlistmaker.data.repository.TrackRepositoryImpl
-import com.practicum.playlistmaker.domain.SearchHistoryInteractor
-import com.practicum.playlistmaker.domain.SearchTracksInteractor
-import com.practicum.playlistmaker.domain.SettingsInteractor
-import com.practicum.playlistmaker.domain.impl.SearchHistoryInteractorImpl
-import com.practicum.playlistmaker.domain.impl.SearchTracksInteractorImpl
-import com.practicum.playlistmaker.domain.impl.SettingsInteractorImpl
+import com.practicum.playlistmaker.presentation.search.domain.SearchHistoryInteractor
+import com.practicum.playlistmaker.presentation.search.domain.SearchTracksInteractor
+import com.practicum.playlistmaker.presentation.settings.domain.SettingsInteractor
+import com.practicum.playlistmaker.presentation.search.domain.SearchHistoryInteractorImpl
+import com.practicum.playlistmaker.presentation.search.domain.SearchTracksInteractorImpl
+import com.practicum.playlistmaker.presentation.settings.domain.SettingsInteractorImpl
 
 object Creator {
 
     private const val PREF_NAME = "playlist_maker_pref"
 
-    private fun getPrefs(context: Context) =
-        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+    private lateinit var application: Application
+
+    fun init(application: Application) {
+        this.application = application
+    }
+
+    private fun getPrefs() =
+        application.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     fun provideSearchTracksInteractor(): SearchTracksInteractor {
         return SearchTracksInteractorImpl(
@@ -26,15 +32,15 @@ object Creator {
         )
     }
 
-    fun provideSearchHistoryInteractor(context: Context): SearchHistoryInteractor {
+    fun provideSearchHistoryInteractor(): SearchHistoryInteractor {
         return SearchHistoryInteractorImpl(
-            SearchHistoryRepositoryImpl(getPrefs(context))
+            SearchHistoryRepositoryImpl(getPrefs())
         )
     }
 
-    fun provideSettingsInteractor(context: Context): SettingsInteractor {
+    fun provideSettingsInteractor(): SettingsInteractor {
         return SettingsInteractorImpl(
-            SettingsRepositoryImpl(getPrefs(context))
+            SettingsRepositoryImpl(getPrefs())
         )
     }
 }
