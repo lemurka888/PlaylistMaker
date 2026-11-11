@@ -15,14 +15,9 @@ class SearchViewModel(
     private val _searchState = MutableLiveData<SearchState>()
     val searchState: LiveData<SearchState> = _searchState
 
-    private val _history = MutableLiveData<List<Track>>()
-    val history: LiveData<List<Track>> = _history
-
-    private val _historyVisible = MutableLiveData<Boolean>()
-    val historyVisible: LiveData<Boolean> = _historyVisible
 
     init {
-        loadHistory()
+        updateEmptyState()
     }
 
     fun search(query: String) {
@@ -33,7 +28,12 @@ class SearchViewModel(
                 if (errorMessage != null) {
                     _searchState.postValue(SearchState.Error)
                 } else if (foundTracks.isNullOrEmpty()) {
-                    _searchState.postValue(SearchState.Empty)
+                    _searchState.postValue(
+                        SearchState.Empty(
+                            history = getHistory(),
+                            historyVisible = false
+                        )
+                    )
                 } else {
                     _searchState.postValue(SearchState.Success(foundTracks))
                 }
@@ -41,30 +41,39 @@ class SearchViewModel(
         })
     }
 
-    fun loadHistory() {
-        _history.value = searchHistoryInteractor.getHistory()
-    }
 
     fun onTrackClicked(track: Track) {
         searchHistoryInteractor.addTrack(track)
-        loadHistory()
     }
 
     fun clearHistory() {
         searchHistoryInteractor.clearHistory()
-        loadHistory()
-        _historyVisible.value = false
+        updateEmptyState()
     }
 
     fun onSearchFieldFocusChanged(hasFocus: Boolean, isEmpty: Boolean) {
-        val hasHistory = searchHistoryInteractor.getHistory().isNotEmpty()
-        _historyVisible.value = hasFocus && isEmpty && hasHistory
+        if (isEmpty) {
+            updateEmptyState(hasFocus)
+        }
     }
 
+    private fun updateEmptyState(hasFocus: Boolean = true) {
+        val history = getHistory()
+            _searchState.value = SearchState.Empty(
+                history = history,
+                historyVisible = hasFocus && history.isNotEmpty()
+        )
+    }
+
+    private fun getHistory(): List<Track> = searchHistoryInteractor.getHistory()
+
     sealed class SearchState {
+        data class Empty(
+            val history: List<Track>,
+            val historyVisible: Boolean
+        ) : SearchState()
         object Loading : SearchState()
-        object Empty : SearchState()
-        object Error : SearchState()
         data class Success(val tracks: List<Track>) : SearchState()
+        object Error : SearchState()
     }
 }

@@ -17,9 +17,6 @@ class PlayerViewModel(
     private val _playerState = MutableLiveData<PlayerState>(PlayerState.Default)
     val playerState: LiveData<PlayerState> = _playerState
 
-    private val _currentTime = MutableLiveData("00:00")
-    val currentTime: LiveData<String> = _currentTime
-
     private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
     private var mediaPlayer: MediaPlayer? = null
     private val handler = Handler(Looper.getMainLooper())
@@ -28,7 +25,9 @@ class PlayerViewModel(
         override fun run() {
             mediaPlayer?.let { mp ->
                 if (mp.isPlaying) {
-                    _currentTime.value = dateFormat.format(mp.currentPosition)
+                    _playerState.value = PlayerState.Playing(
+                        dateFormat.format(mp.currentPosition)
+                    )
                     handler.postDelayed(this, UPDATE_TIME_DELAY)
                 }
             }
@@ -49,11 +48,10 @@ class PlayerViewModel(
         mediaPlayer = MediaPlayer().apply {
             setDataSource(url)
             setOnPreparedListener {
-                _playerState.value = PlayerState.Prepared
+                _playerState.value = PlayerState.Prepared()
             }
             setOnCompletionListener {
-                _playerState.value = PlayerState.Prepared
-                _currentTime.value = "00:00"
+                _playerState.value = PlayerState.Prepared()
                 handler.removeCallbacks(updateTimeRunnable)
             }
             prepareAsync()
@@ -62,23 +60,27 @@ class PlayerViewModel(
 
     fun playbackControl() {
         when (_playerState.value) {
-            PlayerState.Playing -> pausePlayer()
-            PlayerState.Prepared, PlayerState.Paused -> startPlayer()
+            is PlayerState.Playing -> pausePlayer()
+            is PlayerState.Prepared, is PlayerState.Paused -> startPlayer()
             else -> {}
         }
     }
 
     private fun startPlayer() {
         mediaPlayer?.start()
-        _playerState.value = PlayerState.Playing
+        _playerState.value = PlayerState.Playing(
+            dateFormat.format(mediaPlayer?.currentPosition ?: 0)
+        )
         handler.post(updateTimeRunnable)
     }
 
 
     fun pausePlayer() {
-        if (_playerState.value == PlayerState.Playing) {
+        if (_playerState.value is PlayerState.Playing) {
             mediaPlayer?.pause()
-            _playerState.value = PlayerState.Paused
+            _playerState.value = PlayerState.Paused(
+                dateFormat.format(mediaPlayer?.currentPosition ?: 0)
+            )
             handler.removeCallbacks(updateTimeRunnable)
         }
     }
@@ -95,10 +97,10 @@ class PlayerViewModel(
     }
 
     sealed class PlayerState {
-        object Default : PlayerState()
-        object Prepared : PlayerState()
-        object Playing : PlayerState()
-        object Paused : PlayerState()
+        data class Prepared(val currentTime: String = "00:00") : PlayerState()
+        data class Playing(val currentTime: String) : PlayerState()
+        data class Paused(val currentTime: String) : PlayerState()
         object Error : PlayerState()
+        object Default : PlayerState()
     }
 }

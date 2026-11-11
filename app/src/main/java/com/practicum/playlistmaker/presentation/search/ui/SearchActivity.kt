@@ -131,32 +131,36 @@ class SearchActivity : AppCompatActivity() {
         // ПОДПИСКА НА LIVEDATA
         viewModel.searchState.observe(this) { state ->
             when (state) {
-                is SearchViewModel.SearchState.Loading -> {
-                    hideAll()
-                    progressBar.visibility = View.VISIBLE
-                }
                 is SearchViewModel.SearchState.Empty -> {
                     progressBar.visibility = View.GONE
-                    showEmpty()
+                    recyclerView.visibility = View.GONE
+                    emptyPlaceholder.visibility = View.GONE
+                    errorPlaceholder.visibility = View.GONE
+
+                    if (state.historyVisible) {
+                        historyContainer.visibility = View.VISIBLE
+                        historyAdapter.updateTracks(state.history)
+                    }else{
+                        historyContainer.visibility = View.GONE
+                    }
                 }
-                is SearchViewModel.SearchState.Error -> {
+                is SearchViewModel.SearchState.Loading -> {
+                    hideAll()
                     progressBar.visibility = View.GONE
-                    showError()
                 }
                 is SearchViewModel.SearchState.Success -> {
                     progressBar.visibility = View.GONE
+                    historyContainer.visibility = View.GONE
                     showTracks(state.tracks)
+                }
+                is SearchViewModel.SearchState.Error -> {
+                    progressBar.visibility = View.GONE
+                    historyContainer.visibility = View.GONE
+                    showError()
                 }
             }
         }
 
-        viewModel.history.observe(this) { history ->
-            historyAdapter.updateTracks(history)
-        }
-
-        viewModel.historyVisible.observe(this) { visible ->
-            historyContainer.visibility = if (visible) View.VISIBLE else View.GONE
-        }
 
 
         //КНОПКА ОЧИСТКИ ИСТОРИИ

@@ -88,12 +88,15 @@ class PlayerActivity : AppCompatActivity() {
                 is PlayerViewModel.PlayerState.Prepared -> {
                     playButton.isEnabled = true
                     playButton.setImageResource(R.drawable.ic_play)
+                    tvCurrentTime.text = state.currentTime
                 }
                 is PlayerViewModel.PlayerState.Playing -> {
                     playButton.setImageResource(R.drawable.ic_pause)
+                    tvCurrentTime.text = state.currentTime
                 }
                 is PlayerViewModel.PlayerState.Paused -> {
                     playButton.setImageResource(R.drawable.ic_play)
+                    tvCurrentTime.text = state.currentTime
                 }
                 is PlayerViewModel.PlayerState.Error -> {
                     playButton.isEnabled = false
@@ -104,9 +107,6 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.currentTime.observe(this) { time ->
-            tvCurrentTime.text = time
-        }
 
         playButton.setOnClickListener {
             viewModel.playbackControl()
