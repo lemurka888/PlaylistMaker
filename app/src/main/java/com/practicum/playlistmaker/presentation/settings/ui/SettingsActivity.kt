@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.presentation
+package com.practicum.playlistmaker.presentation.settings.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,17 +14,19 @@ import androidx.core.view.updatePadding
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.practicum.playlistmaker.App
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.domain.SettingsInteractor
+import com.practicum.playlistmaker.presentation.MainActivity
 import com.practicum.playlistmaker.presentation.creator.Creator
+import com.practicum.playlistmaker.presentation.settings.domain.SettingsInteractor
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var settingsInteractor: SettingsInteractor
+    private val viewModel: SettingsViewModel by viewModels {
+        SettingsViewModelFactory(Creator.provideSettingsInteractor())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_settings)
-        settingsInteractor = Creator.provideSettingsInteractor(this)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -42,11 +45,15 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        switchDarkTheme.isChecked = settingsInteractor.isDarkTheme()
-        switchDarkTheme.setOnCheckedChangeListener { _, checked ->
-            settingsInteractor.setDarkTheme(checked)
-            (applicationContext as App).switchTheme(checked)
+        viewModel.isDarkTheme.observe(this) { isDark ->
+            switchDarkTheme.isChecked = isDark
+            (application as App).switchTheme(isDark)
         }
+
+        switchDarkTheme.setOnCheckedChangeListener { _, checked ->
+            viewModel.toggleTheme(checked)
+        }
+
 
         btnShare.setOnClickListener {
             val message = getString(R.string.share_message)

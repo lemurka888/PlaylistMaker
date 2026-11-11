@@ -1,13 +1,11 @@
-package com.practicum.playlistmaker.presentation
+package com.practicum.playlistmaker.presentation.player.ui
 
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -22,32 +20,17 @@ import java.util.Locale
 class PlayerActivity : AppCompatActivity() {
 
     companion object {
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
-        private const val UPDATE_TIME_DELAY = 300L
         const val EXTRA_TRACK = "track"
     }
 
-    private var playerState = STATE_DEFAULT
-
-    private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
-
-    private var mediaPlayer = MediaPlayer()
-    private lateinit var playButton: ImageView
-    private lateinit var tvCurrentTime: TextView
-    private lateinit var handler: Handler
-    private val updateTimeRunnable = object : Runnable {
-        override fun run() {
-            if (playerState == STATE_PLAYING) {
-                tvCurrentTime.text = dateFormat.format(mediaPlayer.currentPosition)
-                handler.postDelayed(this, UPDATE_TIME_DELAY)
-            }
-        }
+    private val viewModel: PlayerViewModel by viewModels {
+        val track = intent.getSerializableExtra(EXTRA_TRACK) as? Track
+            ?: throw IllegalStateException("Track must not be null")
+        PlayerViewModelFactory(track)
     }
 
-    // View — как поля класса
+    private lateinit var playButton: ImageView
+    private lateinit var tvCurrentTime: TextView
     private lateinit var btnBack: ImageView
     private lateinit var ivCover: ImageView
     private lateinit var tvTrackName: TextView
@@ -59,6 +42,8 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var tvReleaseValue: TextView
     private lateinit var tvGenreValue: TextView
     private lateinit var tvCountryValue: TextView
+
+    private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,76 +74,53 @@ class PlayerActivity : AppCompatActivity() {
         tvGenreValue = findViewById(R.id.tvGenreValue)
         tvCountryValue = findViewById(R.id.tvCountryValue)
         playButton = findViewById(R.id.btnPlay)
-
         tvCurrentTime = findViewById(R.id.tvCurrentTime)
-        handler = Handler(Looper.getMainLooper())
+
 
         val track = intent.getSerializableExtra(EXTRA_TRACK) as? Track
         if (track != null) {
             bindTrack(track)
-            preparePlayer(track.previewUrl)
         }
 
+        // Подписка на LiveData
+        viewModel.playerState.observe(this) { state ->
+            when (state) {
+                is PlayerViewModel.PlayerState.Prepared -> {
+                    playButton.isEnabled = true
+                    playButton.setImageResource(R.drawable.ic_play)
+                    tvCurrentTime.text = state.currentTime
+                }
+                is PlayerViewModel.PlayerState.Playing -> {
+                    playButton.setImageResource(R.drawable.ic_pause)
+                    tvCurrentTime.text = state.currentTime
+                }
+                is PlayerViewModel.PlayerState.Paused -> {
+                    playButton.setImageResource(R.drawable.ic_play)
+                    tvCurrentTime.text = state.currentTime
+                }
+                is PlayerViewModel.PlayerState.Error -> {
+                    playButton.isEnabled = false
+                }
+                is PlayerViewModel.PlayerState.Default -> {
+                    playButton.isEnabled = false
+                }
+            }
+        }
+
+
         playButton.setOnClickListener {
-            playbackControl()
+            viewModel.playbackControl()
         }
 
         btnBack.setOnClickListener { finish() }
     }
 
-    private fun preparePlayer(url: String?) {
-        if (url.isNullOrEmpty()) {
-            playButton.isEnabled = false
-            return
-        }
-
-        mediaPlayer.setDataSource(url)
-
-        mediaPlayer.setOnPreparedListener {
-            playButton.isEnabled = true
-            playerState = STATE_PREPARED
-        }
-
-        mediaPlayer.setOnCompletionListener {
-            playerState = STATE_PREPARED
-            tvCurrentTime.text = "00:00"
-            handler.removeCallbacks(updateTimeRunnable)
-        }
-
-        mediaPlayer.prepareAsync()
-    }
-
-    private fun startPlayer() {
-        mediaPlayer.start()
-        playButton.setImageResource(R.drawable.ic_pause)
-        playerState = STATE_PLAYING
-        handler.post(updateTimeRunnable)
-    }
-
-    private fun pausePlayer() {
-        mediaPlayer.pause()
-        playButton.setImageResource(R.drawable.ic_play)
-        playerState = STATE_PAUSED
-        handler.removeCallbacks(updateTimeRunnable)
-    }
-
-    private fun playbackControl() {
-        when (playerState) {
-            STATE_PLAYING -> pausePlayer()
-            STATE_PREPARED, STATE_PAUSED -> startPlayer()
-        }
-    }
 
     override fun onPause() {
         super.onPause()
-        pausePlayer()
+        viewModel.pausePlayer()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(updateTimeRunnable)
-        mediaPlayer.release()
-    }
 
     private fun bindTrack(track: Track) {
         tvTrackName.text = track.trackName ?: "—"

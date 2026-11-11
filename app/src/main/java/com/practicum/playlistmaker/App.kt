@@ -2,7 +2,7 @@ package com.practicum.playlistmaker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.practicum.playlistmaker.domain.SettingsInteractor
+import com.practicum.playlistmaker.presentation.settings.domain.SettingsInteractor
 import com.practicum.playlistmaker.presentation.creator.Creator
 
 class App: Application() {
@@ -11,7 +11,8 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        settingsInteractor = Creator.provideSettingsInteractor(this)
+        Creator.init(this)
+        settingsInteractor = Creator.provideSettingsInteractor()
         switchTheme(settingsInteractor.isDarkTheme())
     }
 
